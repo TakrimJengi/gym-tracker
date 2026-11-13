@@ -1,121 +1,423 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#10251e">
-<meta name="description" content="Your personalized 25-day beginner gym and mobility tracker.">
+<meta name="description" content="Your illustrated 25-day beginner gym and mobility coach.">
 <link rel="manifest" href="manifest.webmanifest">
-<title>25-Day Gym Tracker</title>
+<title>25-Day Gym Coach</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1512;--panel:#14231d;--panel2:#1b3027;--text:#f2f7f3;--muted:#a9bdb1;--green:#8fe0ad;--line:#2c493b;--orange:#f4bd75}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#10251e,#09110f 55%);color:var(--text);font:16px system-ui,-apple-system,Segoe UI,sans-serif;padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}
-main{max-width:760px;margin:auto;padding:18px 0 40px}.hero{padding:20px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(135deg,#1c3b2d,#14231d);box-shadow:0 12px 35px #0004}
-.eyebrow{color:var(--green);font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}.hero h1{font-size:clamp(27px,7vw,40px);line-height:1.05;margin:9px 0}.hero p{color:var(--muted);margin:8px 0 0}.stats{display:flex;gap:10px;margin-top:18px}.stat{background:#0d1b15a8;padding:10px 13px;border-radius:13px;flex:1}.stat b{display:block;font-size:22px}.stat small{color:var(--muted)}
-.progress{height:9px;background:#30473b;border-radius:20px;overflow:hidden;margin-top:16px}.bar{height:100%;width:0;background:var(--green);transition:width .2s}
-section{margin-top:22px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}h2{font-size:19px;margin:0}.muted{color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.day{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;min-height:53px;font-weight:700;cursor:pointer}.day small{display:block;font-weight:500;color:var(--muted);font-size:10px}.day.done{background:#204a34;border-color:#5caa78}.day.active{outline:2px solid var(--green);outline-offset:1px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px;margin-top:10px}.tag{display:inline-block;color:#10251e;background:var(--green);font-size:11px;font-weight:800;padding:4px 8px;border-radius:20px;margin-bottom:7px}.exercise{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}.exercise:last-child{border:0}.exercise input{width:21px;height:21px;accent-color:#8fe0ad;flex:none;margin-top:2px}.exercise b{display:block}.exercise small{color:var(--muted);display:block;line-height:1.4;margin-top:3px}
-button,.btn{border:1px solid var(--line);border-radius:12px;padding:11px 14px;background:var(--panel2);color:var(--text);font-weight:700;cursor:pointer}.primary{background:var(--green);color:#10251e;border:0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.tip{border-left:3px solid var(--orange);padding:10px 12px;background:#2a241a;border-radius:8px;color:#f3dfc2;font-size:13px;line-height:1.5}
-footer{text-align:center;color:var(--muted);font-size:12px;margin-top:25px}
-@media(max-width:390px){.grid{gap:5px}.day{min-height:48px;font-size:13px}.day small{font-size:9px}}
+:root{color-scheme:dark;--bg:#0b1512;--panel:#14231d;--panel2:#1b3027;--text:#f2f7f3;--muted:#a9bdb1;--green:#8fe0ad;--line:#2c493b;--orange:#f4bd75;--red:#f08c82}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#10251e,#09110f 58%);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif;padding:env(safe-area-inset-top) 13px env(safe-area-inset-bottom)}
+main{max-width:760px;margin:auto;padding:14px 0 40px}
+.hero{padding:20px;border:1px solid var(--line);border-radius:23px;background:linear-gradient(135deg,#1c3b2d,#14231d);box-shadow:0 12px 35px #0004}
+.eyebrow{color:var(--green);font-weight:800;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.hero h1{font-size:clamp(27px,7vw,39px);line-height:1.04;margin:8px 0}
+.hero p{color:var(--muted);margin:7px 0 0}
+.stats{display:flex;gap:9px;margin-top:16px}
+.stat{background:#0d1b15a8;padding:10px 12px;border-radius:13px;flex:1}
+.stat b{display:block;font-size:22px}
+.stat small{color:var(--muted);font-size:11px}
+.progress{height:8px;background:#30473b;border-radius:20px;overflow:hidden;margin-top:14px}
+.bar{height:100%;width:0;background:var(--green);transition:width .2s}
+nav{display:flex;gap:7px;overflow:auto;padding:14px 1px 2px;position:sticky;top:0;background:#0b1512ee;z-index:5;backdrop-filter:blur(10px)}
+nav button{white-space:nowrap;padding:9px 12px;font-size:13px}
+nav button.active{background:var(--green);color:#10251e;border-color:var(--green)}
+section{margin-top:19px}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+h2{font-size:19px;margin:0}
+.muted{color:var(--muted);font-size:12px}
+.page{display:none}
+.page.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.day{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:11px;min-height:51px;font-weight:750;cursor:pointer;padding:5px 1px}
+.day small{display:block;font-weight:500;color:var(--muted);font-size:9px}
+.day.done{background:#204a34;border-color:#5caa78}
+.day.active{outline:2px solid var(--green);outline-offset:1px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin-top:10px}
+.tag{display:inline-block;color:#10251e;background:var(--green);font-size:10px;font-weight:850;padding:4px 8px;border-radius:20px;margin-bottom:7px}
+.exercise{display:grid;grid-template-columns:112px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.exercise:last-child{border:0}
+.art{width:112px;height:105px;background:linear-gradient(145deg,#203b2e,#12251c);border:1px solid #345342;border-radius:13px;display:grid;place-items:center;overflow:hidden}
+.art svg{width:100%;height:100%}
+.exbody{min-width:0}
+.exbody h3{font-size:15px;margin:1px 0 4px}
+.dose{color:var(--green);font-weight:750;font-size:12px}
+.exbody p{font-size:12px;color:var(--muted);line-height:1.45;margin:6px 0}
+.checkrow{display:flex;align-items:center;gap:7px;margin-top:8px;font-size:12px}
+.checkrow input{width:18px;height:18px;accent-color:#8fe0ad}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:20px;padding:4px 7px;color:var(--muted);font-size:10px;margin:2px 3px 0 0}
+button,.btn{border:1px solid var(--line);border-radius:11px;padding:10px 13px;background:var(--panel2);color:var(--text);font-weight:750;cursor:pointer}
+.primary{background:var(--green);color:#10251e;border:0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.actions button{flex:1}
+.timerbox{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.timerbox strong{font-size:29px;font-variant-numeric:tabular-nums}
+.timercontrols{display:flex;gap:6px;flex-wrap:wrap}
+.timercontrols button{padding:8px 10px}
+.tip{border-left:3px solid var(--orange);padding:10px 12px;background:#2a241a;border-radius:8px;color:#f3dfc2;font-size:12px;line-height:1.5;margin-top:13px}
+.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}
+.field input{width:100%;padding:11px;background:#0d1914;color:var(--text);border:1px solid var(--line);border-radius:10px;font:inherit}
+.record{padding:10px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;font-size:12px}
+.record:last-child{border:0}
+footer{text-align:center;color:var(--muted);font-size:11px;margin-top:24px}
+@media(max-width:420px){.exercise{grid-template-columns:96px 1fr;gap:9px}.art{width:96px;height:100px}.grid{gap:4px}.day{font-size:12px}.day small{font-size:8px}}
 </style>
 </head>
-<body><main>
+<body>
+<main>
 <header class="hero">
  <div class="eyebrow">Your personal fitness companion</div>
- <h1>25-Day<br>Gym Tracker</h1>
- <p>Build strength · Improve posture · Move better</p>
- <div class="stats"><div class="stat"><b id="count">0/25</b><small>Days completed</small></div><div class="stat"><b id="percent">0%</b><small>Progress</small></div></div>
+ <h1>25-Day<br>Gym Coach</h1>
+ <p>Illustrated workouts · Better posture · Stronger body</p>
+ <div class="stats">
+  <div class="stat"><b id="count">0/25</b><small>Days completed</small></div>
+  <div class="stat"><b id="percent">0%</b><small>Plan progress</small></div>
+  <div class="stat"><b id="streak">0</b><small>Days checked</small></div>
+ </div>
  <div class="progress"><div class="bar" id="bar"></div></div>
 </header>
-<section>
- <div class="sectionhead"><h2>Your 25-day calendar</h2><span class="muted">Tap a day</span></div>
- <div class="grid" id="calendar"></div>
-</section>
-<section>
- <div class="sectionhead"><h2 id="dayTitle">Day 1</h2><span class="muted" id="dayType"></span></div>
- <div class="card" id="details"></div>
- <div class="actions"><button class="primary" id="completeBtn">Mark day complete ✓</button><button id="resetDay">Reset this day</button></div>
-</section>
-<section>
- <h2>Daily reminders</h2>
- <div class="card">
-  <div class="exercise"><span>💧</span><div><b>Hydration</b><small>Drink water regularly, especially in warm weather.</small></div></div>
-  <div class="exercise"><span>🥚</span><div><b>Protein with meals</b><small>Eggs, fish, chicken, milk, yogurt, dal or chickpeas.</small></div></div>
-  <div class="exercise"><span>😴</span><div><b>Sleep and recovery</b><small>Aim for 7–9 hours. Rest days are part of training.</small></div></div>
-  <div class="exercise"><span>🧍</span><div><b>Shoulder comfort</b><small>Move gently. Do not force your shoulders backwards or push through pain.</small></div></div>
- </div>
-</section>
-<section class="tip">Beginner rule: use controlled movements and stop with 2–3 good repetitions still possible. Stop an exercise if it causes sharp pain, numbness or worsening symptoms. If shoulder pain or restricted movement persists, consult a physiotherapist.</section>
-<footer>Your checkmarks are saved on this device. Keep showing up — consistency beats perfection.</footer>
+
+<nav>
+ <button class="active" data-page="plan">📅 Plan</button>
+ <button data-page="mobility">🧘 Mobility</button>
+ <button data-page="timer">⏱ Rest timer</button>
+ <button data-page="progress">📈 My progress</button>
+</nav>
+
+<div class="page active" id="plan">
+ <section>
+  <div class="sectionhead"><h2>25-day calendar</h2><span class="muted">Choose a day</span></div>
+  <div class="grid" id="calendar"></div>
+ </section>
+ <section>
+  <div class="sectionhead"><h2 id="dayTitle">Day 1</h2><span class="muted" id="dayType"></span></div>
+  <div class="card" id="details"></div>
+  <div class="actions">
+   <button class="primary" id="completeBtn">Mark day complete ✓</button>
+   <button id="resetDay">Reset day</button>
+  </div>
+ </section>
+ <div class="tip">Beginner rule: use light weights and controlled reps. Finish each set feeling you could still do 2–3 good reps. Never force a painful shoulder range.</div>
+</div>
+
+<div class="page" id="mobility">
+ <section>
+  <div class="sectionhead"><h2>Daily mobility routine</h2><span class="muted">8–12 minutes</span></div>
+  <p class="muted">Use this on recovery days or after strength training. Gentle range only; don't push into pain.</p>
+  <div class="card" id="mobilityList"></div>
+ </section>
+</div>
+
+<div class="page" id="timer">
+ <section>
+  <h2>Rest timer</h2>
+  <div class="card">
+   <div class="timerbox">
+    <div><span class="muted">Time remaining</span><br><strong id="time">01:00</strong></div>
+    <div class="timercontrols">
+     <button data-seconds="30">30s</button>
+     <button data-seconds="60">60s</button>
+     <button data-seconds="90">90s</button>
+     <button data-seconds="120">2m</button>
+    </div>
+   </div>
+   <div class="actions">
+    <button class="primary" id="startTimer">Start</button>
+    <button id="pauseTimer">Pause</button>
+    <button id="resetTimer">Reset</button>
+   </div>
+   <p class="muted">Suggested rest: 60–90 seconds between beginner strength sets; take longer if you need it.</p>
+  </div>
+ </section>
+</div>
+
+<div class="page" id="progress">
+ <section>
+  <h2>Body measurements</h2>
+  <p class="muted">Optional check-in. Measure under similar conditions, ideally in the morning.</p>
+  <div class="card">
+   <div class="fieldgrid">
+    <div class="field"><label>Weight (kg)</label><input id="weight" type="number" inputmode="decimal" placeholder="e.g. 76" step=".1"></div>
+    <div class="field"><label>Waist (cm)</label><input id="waist" type="number" inputmode="decimal" placeholder="e.g. 86" step=".1"></div>
+    <div class="field"><label>Chest (cm) — optional</label><input id="chest" type="number" inputmode="decimal" placeholder="Optional" step=".1"></div>
+    <div class="field"><label>Notes</label><input id="notes" type="text" placeholder="Energy, sleep, etc."></div>
+   </div>
+   <div class="actions"><button class="primary" id="saveMeasure">Save check-in</button></div>
+  </div>
+ </section>
+ <section>
+  <div class="sectionhead"><h2>Check-in history</h2><button id="clearMeasures">Clear</button></div>
+  <div class="card" id="history"><p class="muted">No measurements saved yet.</p></div>
+ </section>
+ <section>
+  <h2>Training summary</h2>
+  <div class="card">
+   <div class="record"><span>Completed workout days</span><b id="sumDays">0 / 25</b></div>
+   <div class="record"><span>Exercise items checked</span><b id="sumExercises">0</b></div>
+   <div class="record"><span>Last check-in</span><b id="lastCheck">—</b></div>
+  </div>
+ </section>
+</div>
+
+<footer>Progress is saved on this device. This app is a general fitness guide, not a medical assessment.</footer>
 </main>
+
 <script>
+const EX={
+ squat:{n:"Bodyweight squat",dose:"2 sets × 10–12 reps",how:"Stand about shoulder-width apart. Push hips back and bend knees as if sitting on a chair. Keep heels down; stand smoothly.",cue:"Knees follow toes · comfortable depth",art:"squat"},
+ row:{n:"Seated cable row",dose:"2 sets × 10–12 reps",how:"Sit tall with a neutral back. Pull the handle towards your lower ribs, bringing elbows back without shrugging. Return slowly.",cue:"Shoulders relaxed · no swinging",art:"row"},
+ push:{n:"Wall / high-counter push-up",dose:"2 sets × 8–12 reps",how:"Hands on a wall or sturdy high counter at chest height. Keep body straight, bend elbows gently, then push away. Choose the easier wall version first.",cue:"Comfortable range · no shoulder pinch",art:"push"},
+ hinge:{n:"Light hip hinge",dose:"2 sets × 8–10 reps",how:"Stand with soft knees. Push hips backwards while keeping your back neutral, then squeeze glutes to stand. Start without weight.",cue:"Move from hips · back stays neutral",art:"hinge"},
+ pulldown:{n:"Lat pulldown",dose:"2 sets × 10–12 reps",how:"Use a comfortable grip. Pull the bar towards upper chest without leaning far back. Let arms rise slowly; don't pull behind your neck.",cue:"No shrugging · pain-free range",art:"pulldown"},
+ deadbug:{n:"Dead bug",dose:"2 sets × 8 each side",how:"Lie on your back with arms up and knees bent. Slowly lower the opposite arm and leg while keeping your trunk steady. Alternate.",cue:"Small range is fine · breathe",art:"deadbug"},
+ bridge:{n:"Glute bridge",dose:"2 sets × 12–15 reps",how:"Lie on your back, knees bent and feet flat. Press through feet to lift hips, squeeze glutes, then lower slowly without arching your back.",cue:"Lift from hips · don't over-arch",art:"bridge"},
+ bird:{n:"Bird dog",dose:"2 sets × 8 each side",how:"On hands and knees, extend opposite arm and leg. Keep your trunk steady, pause, then switch sides. Don't lift too high.",cue:"Keep hips level · move slowly",art:"bird"},
+ calf:{n:"Standing calf raise",dose:"2 sets × 12–15 reps",how:"Hold a stable support. Rise onto your toes, pause, then lower heels slowly.",cue:"Smooth movement · steady balance",art:"calf"},
+ legcurl:{n:"Seated leg curl",dose:"2 sets × 10–12 reps",how:"Adjust the machine so the pad sits comfortably above your heels. Bend knees to pull the pad down, then return slowly.",cue:"Controlled reps · no jerking",art:"legcurl"},
+ face:{n:"Light face pull (optional)",dose:"2 sets × 10–12 reps",how:"With a cable or band anchored securely around face height, pull towards your face with elbows comfortable. Keep neck relaxed. Skip if it pinches.",cue:"Very light resistance · pain-free only",art:"face"},
+ walk:{n:"Easy walk",dose:"15–30 minutes",how:"Walk on a safe, level route at a pace where you can still speak in full sentences.",cue:"Comfortable pace · hydrate",art:"walk"},
+ cat:{n:"Cat–cow",dose:"8–10 slow reps",how:"On hands and knees, gently round your back, then slowly extend it. Follow your breathing and avoid forcing the range.",cue:"Slow spinal movement",art:"cat"},
+ chest:{n:"Gentle doorway chest stretch",dose:"2 × 20 seconds",how:"Place forearm on a doorframe and turn your body slightly away until you feel a mild chest stretch. Keep it pain-free.",cue:"No pinching in front of shoulder",art:"chest"},
+ hip:{n:"Half-kneeling hip-flexor stretch",dose:"20–30 seconds each side",how:"Kneel on one knee, gently tuck pelvis and shift hips forward until you feel a mild stretch at the front of the hip.",cue:"Stay tall · don't arch lower back",art:"hip"},
+ ham:{n:"Lying hamstring stretch",dose:"20 seconds each side",how:"Lie on your back and raise one leg, supporting it with your hands or a towel. Keep a slight knee bend if needed.",cue:"Gentle stretch · no bouncing",art:"ham"},
+ child:{n:"Child's pose",dose:"20–30 seconds",how:"Kneel and move hips gently towards heels while reaching arms forward. Put a cushion under hips or knees if needed.",cue:"Skip if knees or shoulders dislike it",art:"child"},
+ bike:{n:"Stationary bike / treadmill",dose:"20–30 minutes",how:"Choose an easy-to-moderate pace. You should be able to talk. Avoid high intensity while building your base.",cue:"Steady effort · not a race",art:"bike"},
+ chair:{n:"Chair sit-to-stand",dose:"2 sets × 10–12 reps",how:"Use a stable chair. Lean forward slightly, stand up, then lower yourself slowly until seated.",cue:"Control the lowering phase",art:"chair"},
+ plank:{n:"Incline plank",dose:"2 × 15–25 seconds",how:"Place forearms on a sturdy counter or bench. Step back and keep body in a straight line. Stop before your back sags.",cue:"Brace gently · breathe normally",art:"plank"}
+};
+
 const plans=[
-["Workout A","Full-body strength",[
-["Bodyweight squat","2 sets × 10–12 reps","Sit hips back; keep heels down."],
-["Seated row / band row","2 × 10–12","Pull towards lower ribs; relax neck."],
-["Wall or high-counter push-up","2 × 8–12","Use a comfortable range; body stays straight."],
-["Romanian deadlift (light)","2 × 8–10","Hip hinge; keep weights close and back neutral."],
-["Lat pulldown (comfortable grip)","2 × 10–12","Pull smoothly; don't swing."],
-["Dead bug","2 × 8 each side","Move slowly; keep trunk stable."]
-]],
-["Mobility + walk","Recovery",[
-["Easy walk","15–30 minutes","Comfortable pace; you should be able to talk."],
-["Daily mobility routine","8–10 minutes","Wall slides, cat-cow, hip-flexor and hamstring stretches."]
-]],
-["Workout B","Full-body strength",[
-["Goblet squat / chair squat","2 × 8–12","Use a light weight and comfortable depth."],
-["Chest-supported row","2 × 10–12","Pull without shrugging."],
-["Glute bridge","2 × 12–15","Squeeze glutes; don't over-arch."],
-["Light face pull (if pain-free)","2 × 12","Keep neck relaxed; skip if uncomfortable."],
-["Seated leg curl","2 × 10–12","Control the movement."],
-["Forearm plank","2 × 15–30 sec","Keep body aligned; stop before form breaks."]
-]],
-["Mobility","Gentle movement",[
-["Cat-cow","8–10 reps","Move slowly with your breathing."],
-["Doorway chest stretch","2 × 20 sec","Gentle stretch only; no shoulder pinching."],
-["Hip-flexor stretch","20–30 sec each side","Keep torso upright."],
-["Hamstring stretch","20 sec each side","Keep a slight knee bend if needed."],
-["Easy walk","10–20 minutes","Optional, at a relaxed pace."]
-]],
-["Workout A","Full-body strength",[
-["Repeat Workout A","2 sets each","Use the same comfortable weights; focus on technique."]
-]],
-["Cardio + mobility","Easy conditioning",[
-["Treadmill / outdoor walk / bike","20–30 minutes","Steady pace; build gradually."],
-["Daily mobility routine","8–10 minutes","No forcing stretches."]
-]],
-["Rest","Recovery",[
-["Rest day","No structured workout","Optional gentle walk. Eat, hydrate and sleep well."]
-]]
+ ["Workout A","Full-body strength",["squat","row","push","hinge","pulldown","deadbug"]],
+ ["Mobility + walk","Recovery",["walk","cat","chest","hip","ham"]],
+ ["Workout B","Full-body strength",["chair","row","bridge","face","legcurl","bird"]],
+ ["Mobility","Gentle movement",["cat","chest","hip","ham","child"]],
+ ["Workout A","Full-body strength",["squat","row","push","hinge","pulldown","deadbug"]],
+ ["Cardio + mobility","Easy conditioning",["bike","cat","hip","chest"]],
+ ["Rest","Recovery",[]]
 ];
+
 const schedule=[0,1,2,3,4,5,6,2,1,0,3,2,5,6,0,1,2,3,0,5,6,2,1,0,2];
-const names=["Workout A","Mobility + walk","Workout B","Mobility","Workout A","Cardio + mobility","Rest"];
 const labels=["Strength","Recovery","Strength","Mobility","Strength","Cardio","Rest"];
-let selected=1, state=JSON.parse(localStorage.getItem("gym25state")||'{"completed":[],"checks":{}}');
+
+let selected=1;
+let state=JSON.parse(localStorage.getItem("gymCoachState")||'{"completed":[],"checks":{},"measurements":[]}');
 const $=id=>document.getElementById(id);
-function save(){localStorage.setItem("gym25state",JSON.stringify(state));render();}
+
+function svgArt(type){
+ const common=`<svg viewBox="0 0 120 105" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Exercise movement illustration"><path d="M9 91H111" stroke="#547363" stroke-width="2" stroke-linecap="round"/><circle cx="60" cy="12" r="7" fill="#f2c9a5"/><g fill="none" stroke="#8fe0ad" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">`;
+ const shapes={
+ squat:`<path d="M60 20L60 48L43 61L34 87M43 61L68 65L83 87M60 31L43 43L34 35M60 31L76 43L85 35"/>`,
+ row:`<path d="M60 20L60 50L60 70M60 33L39 48L25 48M60 33L81 48L96 48M60 70L45 89M60 70L75 89"/><path d="M18 48H102" stroke="#f4bd75" stroke-width="2"/>`,
+ push:`<path d="M26 68L53 48L83 51L100 75M53 48L42 28M83 51L91 29M26 68L18 82M100 75L105 86"/>`,
+ hinge:`<path d="M60 20L48 48L68 57L83 86M68 57L44 65L34 88M48 48L31 59M48 48L67 36"/>`,
+ pulldown:`<path d="M60 20L60 50L60 70M60 33L39 16L30 8M60 33L81 16L90 8M60 70L45 89M60 70L75 89"/><path d="M23 7H97" stroke="#f4bd75" stroke-width="3"/>`,
+ deadbug:`<path d="M29 72L62 72L84 58L100 58M62 72L49 52L36 42M62 72L77 88M29 72L18 84"/>`,
+ bridge:`<path d="M19 78L38 78L58 54L80 58L101 86M58 54L52 34M38 78L31 88"/>`,
+ bird:`<path d="M60 50L60 72L36 72L23 87M60 72L82 72L96 87M60 50L34 38L16 38M60 50L82 30L103 30"/>`,
+ calf:`<path d="M60 20L60 53L52 79L52 89M60 53L73 78L73 89M60 33L42 46M60 33L78 46"/>`,
+ legcurl:`<path d="M22 62H93M36 62L36 81M83 62L83 81M38 55L61 54L78 66L92 66M78 66L90 85"/>`,
+ face:`<path d="M60 20L60 50L60 73M60 34L38 41L30 28M60 34L82 41L90 28M60 73L46 89M60 73L74 89"/><path d="M15 28H105" stroke="#f4bd75" stroke-width="2"/>`,
+ walk:`<path d="M60 20L55 48L38 66L29 87M55 48L76 61L91 84M56 30L37 43M56 30L78 39"/>`,
+ cat:`<path d="M25 62L92 62L101 72M25 62L20 77M92 62L88 77M25 62L35 45L51 49L66 44L83 48L92 62"/>`,
+ chest:`<path d="M60 20L60 55L60 85M60 33L35 32L25 43M60 33L83 31L96 43M60 55L46 87M60 55L74 87"/>`,
+ hip:`<path d="M60 20L60 50L39 65L25 86M39 65L61 66L82 86M60 32L42 45M60 32L78 45"/>`,
+ ham:`<path d="M24 78H91M48 75L60 56L77 55L90 35M60 56L52 34L42 25"/>`,
+ child:`<path d="M60 47L42 64L25 72L13 72M42 64L63 76L83 76M60 47L76 35L96 35"/>`,
+ bike:`<circle cx="31" cy="73" r="16" stroke="#f4bd75" stroke-width="2"/><circle cx="91" cy="73" r="16" stroke="#f4bd75" stroke-width="2"/><path d="M31 73L53 73L69 43L91 73L53 73L45 51M69 43L80 43M60 20L53 43L69 43"/>`,
+ chair:`<path d="M60 20L60 50L48 65L39 87M48 65L71 65L83 87M22 58V89H52"/>`,
+ plank:`<path d="M22 67L55 53L88 60L101 83M55 53L42 82M88 60L83 85"/>`
+ };
+ return common+(shapes[type]||shapes.squat)+`</g><text x="60" y="101" text-anchor="middle" font-size="7" fill="#a9bdb1" font-family="system-ui">MOVEMENT GUIDE</text></svg>`;
+}
+
+function save(){
+ localStorage.setItem("gymCoachState",JSON.stringify(state));
+ render();
+}
+
 function render(){
  $("count").textContent=state.completed.length+"/25";
  $("percent").textContent=Math.round(state.completed.length/25*100)+"%";
- $("bar").style.width=(state.completed.length/25*100)+"%";
+ $("bar").style.width=state.completed.length/25*100+"%";
+ $("streak").textContent=state.completed.length;
  $("calendar").innerHTML="";
- for(let d=1;d<=25;d++){let b=document.createElement("button");b.className="day"+(state.completed.includes(d)?" done":"")+(selected===d?" active":"");b.innerHTML=(state.completed.includes(d)?"✓ ":"")+d+"<small>"+(d===25?"Review":labels[schedule[d-1]])+"</small>";b.onclick=()=>{selected=d;render()};$("calendar").appendChild(b)}
- let p=plans[schedule[selected-1]];$("dayTitle").textContent="Day "+selected+" — "+(selected===25?"Light full-body review":names[schedule[selected-1]]);
- $("dayType").textContent=selected===25?"Light session":labels[schedule[selected-1]];
+
+ for(let d=1;d<=25;d++){
+  let b=document.createElement("button");
+  b.className="day"+(state.completed.includes(d)?" done":"")+(selected===d?" active":"");
+  b.innerHTML=(state.completed.includes(d)?"✓ ":"")+d+"<small>"+(d===25?"Review":labels[schedule[d-1]])+"</small>";
+  b.onclick=()=>{selected=d;render()};
+  $("calendar").appendChild(b);
+ }
+
+ let p=plans[schedule[selected-1]],ids=p[2];
+ $("dayTitle").textContent="Day "+selected+" — "+(selected===25?"Light review":p[0]);
+ $("dayType").textContent=p[1];
  let html='<span class="tag">'+p[1]+'</span>';
- if(selected>=8 && selected<=24 && [8,10,12,15,17,19,22,24].includes(selected)) html+='<p class="muted">If recovery and technique are good, you may progress to 3 sets. Otherwise stay at 2.</p>';
- if(selected===25) html+='<p class="muted">Keep this session easy: choose 3–4 familiar movements, 1–2 light sets each, then review how you feel.</p>';
- p[2].forEach((e,i)=>{let key=selected+"-"+i;let checked=(state.checks[key]||false);html+=`<label class="exercise"><input type="checkbox" data-key="${key}" ${checked?"checked":""}><span><b>${e[0]}</b><small>${e[1]} · ${e[2]}</small></span></label>`});
- if(schedule[selected-1]===6)html+='<p class="muted">Rest is training too. No need to make up missed workouts.</p>';
+
+ if([8,10,12,15,17,19,22,24].includes(selected))
+  html+='<p class="muted">Only add a third set if your recovery and technique are good. Otherwise keep 2 sets.</p>';
+
+ if(selected===25){
+  ids=["squat","row","bridge","deadbug"];
+  html+='<p class="muted">Keep this review easy: 1–2 light sets of familiar exercises.</p>';
+ }
+
+ if(!ids.length)
+  html+='<p class="muted">Take a full rest day. Optional easy walk and gentle mobility only.</p>';
+
+ ids.forEach((id,i)=>{
+  let e=EX[id],key=selected+"-"+id+"-"+i,checked=!!state.checks[key];
+  html+=`<article class="exercise">
+   <div class="art">${svgArt(e.art)}</div>
+   <div class="exbody">
+    <h3>${e.n}</h3>
+    <div class="dose">${e.dose}</div>
+    <p>${e.how}</p>
+    <span class="pill">${e.cue}</span>
+    <label class="checkrow"><input type="checkbox" data-key="${key}" ${checked?"checked":""}> Done for today</label>
+   </div>
+  </article>`;
+ });
+
  $("details").innerHTML=html;
- $("details").querySelectorAll("input").forEach(el=>el.addEventListener("change",()=>{state.checks[el.dataset.key]=el.checked;localStorage.setItem("gym25state",JSON.stringify(state))}));
+ $("details").querySelectorAll("input").forEach(el=>el.addEventListener("change",()=>{
+  state.checks[el.dataset.key]=el.checked;
+  localStorage.setItem("gymCoachState",JSON.stringify(state));
+  updateSummary();
+ }));
  $("completeBtn").textContent=state.completed.includes(selected)?"Completed ✓ — tap to undo":"Mark day complete ✓";
+ updateSummary();
 }
-$("completeBtn").onclick=()=>{state.completed=state.completed.includes(selected)?state.completed.filter(x=>x!==selected):[...state.completed,selected];save()};
-$("resetDay").onclick=()=>{Object.keys(state.checks).filter(k=>k.startsWith(selected+"-")).forEach(k=>delete state.checks[k]);state.completed=state.completed.filter(x=>x!==selected);save()};
+
+function updateSummary(){
+ $("sumDays").textContent=state.completed.length+" / 25";
+ $("sumExercises").textContent=Object.values(state.checks).filter(Boolean).length;
+ $("lastCheck").textContent=state.measurements.length?state.measurements[state.measurements.length-1].date:"—";
+}
+
+$("completeBtn").onclick=()=>{
+ state.completed=state.completed.includes(selected)?state.completed.filter(x=>x!==selected):[...state.completed,selected];
+ save();
+};
+
+$("resetDay").onclick=()=>{
+ Object.keys(state.checks).filter(k=>k.startsWith(selected+"-")).forEach(k=>delete state.checks[k]);
+ state.completed=state.completed.filter(x=>x!==selected);
+ save();
+};
+
+const mobility=["cat","chest","hip","ham","child"];
+$("mobilityList").innerHTML=mobility.map(id=>{
+ let e=EX[id];
+ return `<article class="exercise">
+  <div class="art">${svgArt(e.art)}</div>
+  <div class="exbody">
+   <h3>${e.n}</h3>
+   <div class="dose">${e.dose}</div>
+   <p>${e.how}</p>
+   <span class="pill">${e.cue}</span>
+  </div>
+ </article>`;
+}).join("");
+
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
+ document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x===b));
+ document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===b.dataset.page));
+ if(b.dataset.page==="progress")renderMeasurements();
+});
+
+let remaining=60,timer=null;
+
+function showTime(){
+ $("time").textContent=String(Math.floor(remaining/60)).padStart(2,"0")+":"+String(remaining%60).padStart(2,"0");
+}
+
+document.querySelectorAll("[data-seconds]").forEach(b=>b.onclick=()=>{
+ clearInterval(timer);
+ timer=null;
+ remaining=+b.dataset.seconds;
+ showTime();
+});
+
+$("startTimer").onclick=()=>{
+ if(timer)return;
+ timer=setInterval(()=>{
+  if(remaining>0){
+   remaining--;
+   showTime();
+  }else{
+   clearInterval(timer);
+   timer=null;
+   if(navigator.vibrate)navigator.vibrate([200,100,200]);
+   $("startTimer").textContent="Time's up!";
+  }
+ },1000);
+ $("startTimer").textContent="Running…";
+};
+
+$("pauseTimer").onclick=()=>{
+ clearInterval(timer);
+ timer=null;
+ $("startTimer").textContent="Resume";
+};
+
+$("resetTimer").onclick=()=>{
+ clearInterval(timer);
+ timer=null;
+ remaining=60;
+ showTime();
+ $("startTimer").textContent="Start";
+};
+
+$("saveMeasure").onclick=()=>{
+ let m={
+  date:new Date().toLocaleDateString(),
+  weight:$("weight").value,
+  waist:$("waist").value,
+  chest:$("chest").value,
+  notes:$("notes").value
+ };
+ if(!m.weight&&!m.waist&&!m.chest&&!m.notes){
+  alert("Enter at least one measurement or note.");
+  return;
+ }
+ state.measurements.push(m);
+ ["weight","waist","chest","notes"].forEach(id=>$(id).value="");
+ save();
+ renderMeasurements();
+};
+
+function renderMeasurements(){
+ $("history").innerHTML=state.measurements.length
+ ?state.measurements.slice().reverse().map(m=>`
+  <div class="record">
+   <span><b>${m.date}</b><br><span class="muted">${m.notes||""}</span></span>
+   <span>${m.weight?m.weight+" kg ":""}${m.waist?" · "+m.waist+" cm waist":""}${m.chest?" · "+m.chest+" cm chest":""}</span>
+  </div>`).join("")
+ :'<p class="muted">No measurements saved yet.</p>';
+ updateSummary();
+}
+
+$("clearMeasures").onclick=()=>{
+ if(confirm("Clear all measurement records?")){
+  state.measurements=[];
+  save();
+  renderMeasurements();
+ }
+};
+
 render();
-if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+renderMeasurements();
+showTime();
+
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))
+ navigator.serviceWorker.register("./sw.js").catch(()=>{});
 </script>
-</body></html>
+</body>
+</html>
