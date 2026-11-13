@@ -1,10 +1,11 @@
+
 {
-  "name": "25-Day Gym Tracker",
-  "short_name": "Gym Tracker",
+  "name": "25-Day Gym Coach",
+  "short_name": "Gym Coach",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0b1512",
   "theme_color": "#10251e",
-  "description": "Personalized beginner gym and mobility tracker"
+  "description": "Illustrated beginner gym, mobility and progress tracker"
 }
