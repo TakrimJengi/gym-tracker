@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10251e">
+<meta name="description" content="Your personalized 25-day beginner gym and mobility tracker.">
+<link rel="manifest" href="manifest.webmanifest">
+<title>25-Day Gym Tracker</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1512;--panel:#14231d;--panel2:#1b3027;--text:#f2f7f3;--muted:#a9bdb1;--green:#8fe0ad;--line:#2c493b;--orange:#f4bd75}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#10251e,#09110f 55%);color:var(--text);font:16px system-ui,-apple-system,Segoe UI,sans-serif;padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}
+main{max-width:760px;margin:auto;padding:18px 0 40px}.hero{padding:20px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(135deg,#1c3b2d,#14231d);box-shadow:0 12px 35px #0004}
+.eyebrow{color:var(--green);font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}.hero h1{font-size:clamp(27px,7vw,40px);line-height:1.05;margin:9px 0}.hero p{color:var(--muted);margin:8px 0 0}.stats{display:flex;gap:10px;margin-top:18px}.stat{background:#0d1b15a8;padding:10px 13px;border-radius:13px;flex:1}.stat b{display:block;font-size:22px}.stat small{color:var(--muted)}
+.progress{height:9px;background:#30473b;border-radius:20px;overflow:hidden;margin-top:16px}.bar{height:100%;width:0;background:var(--green);transition:width .2s}
+section{margin-top:22px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}h2{font-size:19px;margin:0}.muted{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.day{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;min-height:53px;font-weight:700;cursor:pointer}.day small{display:block;font-weight:500;color:var(--muted);font-size:10px}.day.done{background:#204a34;border-color:#5caa78}.day.active{outline:2px solid var(--green);outline-offset:1px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px;margin-top:10px}.tag{display:inline-block;color:#10251e;background:var(--green);font-size:11px;font-weight:800;padding:4px 8px;border-radius:20px;margin-bottom:7px}.exercise{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}.exercise:last-child{border:0}.exercise input{width:21px;height:21px;accent-color:#8fe0ad;flex:none;margin-top:2px}.exercise b{display:block}.exercise small{color:var(--muted);display:block;line-height:1.4;margin-top:3px}
+button,.btn{border:1px solid var(--line);border-radius:12px;padding:11px 14px;background:var(--panel2);color:var(--text);font-weight:700;cursor:pointer}.primary{background:var(--green);color:#10251e;border:0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.tip{border-left:3px solid var(--orange);padding:10px 12px;background:#2a241a;border-radius:8px;color:#f3dfc2;font-size:13px;line-height:1.5}
+footer{text-align:center;color:var(--muted);font-size:12px;margin-top:25px}
+@media(max-width:390px){.grid{gap:5px}.day{min-height:48px;font-size:13px}.day small{font-size:9px}}
+</style>
+</head>
+<body><main>
+<header class="hero">
+ <div class="eyebrow">Your personal fitness companion</div>
+ <h1>25-Day<br>Gym Tracker</h1>
+ <p>Build strength · Improve posture · Move better</p>
+ <div class="stats"><div class="stat"><b id="count">0/25</b><small>Days completed</small></div><div class="stat"><b id="percent">0%</b><small>Progress</small></div></div>
+ <div class="progress"><div class="bar" id="bar"></div></div>
+</header>
+<section>
+ <div class="sectionhead"><h2>Your 25-day calendar</h2><span class="muted">Tap a day</span></div>
+ <div class="grid" id="calendar"></div>
+</section>
+<section>
+ <div class="sectionhead"><h2 id="dayTitle">Day 1</h2><span class="muted" id="dayType"></span></div>
+ <div class="card" id="details"></div>
+ <div class="actions"><button class="primary" id="completeBtn">Mark day complete ✓</button><button id="resetDay">Reset this day</button></div>
+</section>
+<section>
+ <h2>Daily reminders</h2>
+ <div class="card">
+  <div class="exercise"><span>💧</span><div><b>Hydration</b><small>Drink water regularly, especially in warm weather.</small></div></div>
+  <div class="exercise"><span>🥚</span><div><b>Protein with meals</b><small>Eggs, fish, chicken, milk, yogurt, dal or chickpeas.</small></div></div>
+  <div class="exercise"><span>😴</span><div><b>Sleep and recovery</b><small>Aim for 7–9 hours. Rest days are part of training.</small></div></div>
+  <div class="exercise"><span>🧍</span><div><b>Shoulder comfort</b><small>Move gently. Do not force your shoulders backwards or push through pain.</small></div></div>
+ </div>
+</section>
+<section class="tip">Beginner rule: use controlled movements and stop with 2–3 good repetitions still possible. Stop an exercise if it causes sharp pain, numbness or worsening symptoms. If shoulder pain or restricted movement persists, consult a physiotherapist.</section>
+<footer>Your checkmarks are saved on this device. Keep showing up — consistency beats perfection.</footer>
+</main>
+<script>
+const plans=[
+["Workout A","Full-body strength",[
+["Bodyweight squat","2 sets × 10–12 reps","Sit hips back; keep heels down."],
+["Seated row / band row","2 × 10–12","Pull towards lower ribs; relax neck."],
+["Wall or high-counter push-up","2 × 8–12","Use a comfortable range; body stays straight."],
+["Romanian deadlift (light)","2 × 8–10","Hip hinge; keep weights close and back neutral."],
+["Lat pulldown (comfortable grip)","2 × 10–12","Pull smoothly; don't swing."],
+["Dead bug","2 × 8 each side","Move slowly; keep trunk stable."]
+]],
+["Mobility + walk","Recovery",[
+["Easy walk","15–30 minutes","Comfortable pace; you should be able to talk."],
+["Daily mobility routine","8–10 minutes","Wall slides, cat-cow, hip-flexor and hamstring stretches."]
+]],
+["Workout B","Full-body strength",[
+["Goblet squat / chair squat","2 × 8–12","Use a light weight and comfortable depth."],
+["Chest-supported row","2 × 10–12","Pull without shrugging."],
+["Glute bridge","2 × 12–15","Squeeze glutes; don't over-arch."],
+["Light face pull (if pain-free)","2 × 12","Keep neck relaxed; skip if uncomfortable."],
+["Seated leg curl","2 × 10–12","Control the movement."],
+["Forearm plank","2 × 15–30 sec","Keep body aligned; stop before form breaks."]
+]],
+["Mobility","Gentle movement",[
+["Cat-cow","8–10 reps","Move slowly with your breathing."],
+["Doorway chest stretch","2 × 20 sec","Gentle stretch only; no shoulder pinching."],
+["Hip-flexor stretch","20–30 sec each side","Keep torso upright."],
+["Hamstring stretch","20 sec each side","Keep a slight knee bend if needed."],
+["Easy walk","10–20 minutes","Optional, at a relaxed pace."]
+]],
+["Workout A","Full-body strength",[
+["Repeat Workout A","2 sets each","Use the same comfortable weights; focus on technique."]
+]],
+["Cardio + mobility","Easy conditioning",[
+["Treadmill / outdoor walk / bike","20–30 minutes","Steady pace; build gradually."],
+["Daily mobility routine","8–10 minutes","No forcing stretches."]
+]],
+["Rest","Recovery",[
+["Rest day","No structured workout","Optional gentle walk. Eat, hydrate and sleep well."]
+]]
+];
+const schedule=[0,1,2,3,4,5,6,2,1,0,3,2,5,6,0,1,2,3,0,5,6,2,1,0,2];
+const names=["Workout A","Mobility + walk","Workout B","Mobility","Workout A","Cardio + mobility","Rest"];
+const labels=["Strength","Recovery","Strength","Mobility","Strength","Cardio","Rest"];
+let selected=1, state=JSON.parse(localStorage.getItem("gym25state")||'{"completed":[],"checks":{}}');
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem("gym25state",JSON.stringify(state));render();}
+function render(){
+ $("count").textContent=state.completed.length+"/25";
+ $("percent").textContent=Math.round(state.completed.length/25*100)+"%";
+ $("bar").style.width=(state.completed.length/25*100)+"%";
+ $("calendar").innerHTML="";
+ for(let d=1;d<=25;d++){let b=document.createElement("button");b.className="day"+(state.completed.includes(d)?" done":"")+(selected===d?" active":"");b.innerHTML=(state.completed.includes(d)?"✓ ":"")+d+"<small>"+(d===25?"Review":labels[schedule[d-1]])+"</small>";b.onclick=()=>{selected=d;render()};$("calendar").appendChild(b)}
+ let p=plans[schedule[selected-1]];$("dayTitle").textContent="Day "+selected+" — "+(selected===25?"Light full-body review":names[schedule[selected-1]]);
+ $("dayType").textContent=selected===25?"Light session":labels[schedule[selected-1]];
+ let html='<span class="tag">'+p[1]+'</span>';
+ if(selected>=8 && selected<=24 && [8,10,12,15,17,19,22,24].includes(selected)) html+='<p class="muted">If recovery and technique are good, you may progress to 3 sets. Otherwise stay at 2.</p>';
+ if(selected===25) html+='<p class="muted">Keep this session easy: choose 3–4 familiar movements, 1–2 light sets each, then review how you feel.</p>';
+ p[2].forEach((e,i)=>{let key=selected+"-"+i;let checked=(state.checks[key]||false);html+=`<label class="exercise"><input type="checkbox" data-key="${key}" ${checked?"checked":""}><span><b>${e[0]}</b><small>${e[1]} · ${e[2]}</small></span></label>`});
+ if(schedule[selected-1]===6)html+='<p class="muted">Rest is training too. No need to make up missed workouts.</p>';
+ $("details").innerHTML=html;
+ $("details").querySelectorAll("input").forEach(el=>el.addEventListener("change",()=>{state.checks[el.dataset.key]=el.checked;localStorage.setItem("gym25state",JSON.stringify(state))}));
+ $("completeBtn").textContent=state.completed.includes(selected)?"Completed ✓ — tap to undo":"Mark day complete ✓";
+}
+$("completeBtn").onclick=()=>{state.completed=state.completed.includes(selected)?state.completed.filter(x=>x!==selected):[...state.completed,selected];save()};
+$("resetDay").onclick=()=>{Object.keys(state.checks).filter(k=>k.startsWith(selected+"-")).forEach(k=>delete state.checks[k]);state.completed=state.completed.filter(x=>x!==selected);save()};
+render();
+if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body></html>
